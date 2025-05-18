@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afc9c2de-cf26-4e35-b1b2-806ff3d6d53e" name="Changes" comment="" />
+    <list default="true" id="afc9c2de-cf26-4e35-b1b2-806ff3d6d53e" name="Changes" comment="feat: add workspace config" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +13,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=Default, isTemplate=false, identifier=serial=127.0.0.1:7555;connection=15a4316e)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -22,26 +22,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "dikeboy"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dikeboy&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dikeboy/compose-multiplatform-launcher.git",
-    "accountId": "e6d555cf-6c00-4c2a-a055-d1d9f09b04c8"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dikeboy/compose-multiplatform-launcher.git&quot;,
+    &quot;accountId&quot;: &quot;e6d555cf-6c00-4c2a-a055-d1d9f09b04c8&quot;
   }
-}]]></component>
+}</component>
   <component name="KotlinMultiplatform" KONAN_HOME="C:\Users\lindonghao\.konan\kotlin-native-prebuilt-windows-x86_64-2.1.20">
     <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":composeApp:" IS_TEST="true">
       <variant NAME="Debug" GRADLE_TASK=":composeApp:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/composeApp/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":composeApp:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":composeApp:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/composeApp/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
         <envs />
       </variant>
     </executable>
@@ -50,10 +45,15 @@
         <envs />
       </variant>
     </executable>
+    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":composeApp:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":composeApp:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/composeApp/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2xGkwFJ7mYjLVsratAW6mWWSZST" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -61,6 +61,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Android App.composeApp.executor": "Run",
     "Gradle.desktop.executor": "Run",
     "Gradle.web.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -191,10 +192,16 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="iosApp" type="KmmRunConfiguration" factoryName="iOS Application" CONFIG_VERSION="1" EXEC_TARGET_ID="B7864B2D-93E2-4527-A7F6-34CA36304355" XCODE_PROJECT="E:\protect\CLauncher\iosApp\iosApp.xcodeproj" XCODE_CONFIGURATION="Debug" XCODE_SCHEME="iosApp">
+      <method v="2">
+        <option name="com.jetbrains.kmm.ios.BuildIOSAppTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Android App.composeApp" />
       <item itemvalue="Gradle.desktop" />
       <item itemvalue="Gradle.web" />
+      <item itemvalue="iOS Application.iosApp" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -206,6 +213,81 @@
       <option name="presentableId" value="Default" />
       <updated>1747572034529</updated>
     </task>
+    <task id="LOCAL-00001" summary="feat: add workspace config">
+      <option name="closed" value="true" />
+      <created>1747573085437</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1747573085438</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="bb3a3167-26db-46f2-b56d-56fec9e7f513" value="TOOL_WINDOW" />
+        <entry key="85473242-c19c-4e0c-9afa-8e05c3e35a00" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="85473242-c19c-4e0c-9afa-8e05c3e35a00">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+        <entry key="bb3a3167-26db-46f2-b56d-56fec9e7f513">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:E:/gitpro/compose-multiplatform-launcher/composeApp" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: add workspace config" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add workspace config" />
   </component>
 </project>
