@@ -1,0 +1,63 @@
+package com.lin.clauncher
+
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.toComposeImageBitmap
+import clauncher.composeapp.generated.resources.Res
+import clauncher.composeapp.generated.resources.mytest
+import clauncher.composeapp.generated.resources.wall_paper
+import coil3.ImageLoader
+import coil3.PlatformContext
+import com.lin.clauncher.util.ClientType
+import com.lin.comlauncher.entity.AppInfoBaseBean
+import com.lin.comlauncher.entity.ApplicationInfo
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.getDrawableResourceBytes
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
+import org.jetbrains.compose.resources.imageResource
+import org.jetbrains.skia.Bitmap
+import org.jetbrains.skia.Drawable
+import platform.Foundation.NSBundle
+import platform.UIKit.UIDevice
+import platform.Foundation.NSDictionary
+import platform.UIKit.UIImage
+
+class IOSPlatform: Platform {
+    override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+    @OptIn(ExperimentalForeignApi::class, ExperimentalResourceApi::class)
+    override  suspend fun getAppList(): AppInfoBaseBean {
+//        SwiftHelper.callSwiftMethod("")
+        return AppInfoBaseBean().apply {
+            nativeProvider?.getInstallApp()?.let {
+
+                println("installapp=${it}")
+                var resMap = Json.decodeFromString<List<Map<String,String>>>(it)
+                var alist = ArrayList<ApplicationInfo>()
+                resMap.forEach { list ->
+//                    var image = nativeProvider?.loadImage(list.get("icon").toString())
+//                    var bitmap = imageResource(Res.drawable.mytest)
+                    alist.add(
+                        ApplicationInfo(
+                            name = "${list.get("name")}",
+//                            icon =
+                        )
+                    )
+                }
+                homeList.add(alist)
+            }
+        }
+
+
+    }
+
+
+}
+
+actual fun getPlatform(): Platform = IOSPlatform()
+actual fun openFolder(app:ApplicationInfo) {
+}
+actual fun getPlatformType(): ClientType {
+    return ClientType.MOBILE_IOS
+}
