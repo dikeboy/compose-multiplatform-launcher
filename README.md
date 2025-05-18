@@ -1,2 +1,10 @@
 # compose-multiplatform-launcher
-A launcher  demo write with  compose multiplatform, run on desktop,android.ios
+# comp-launcher
+A  launcher write all with  compose multiplatform and kotlin
+
+compose drag animation
+
+compose viewpager
+
+compose with viewmodel
+
