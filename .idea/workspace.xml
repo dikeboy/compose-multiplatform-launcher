@@ -73,6 +73,7 @@
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "http.proxy",
     "show.do.not.copy.http.proxy.settings.to.gradle": "true",
     "show.migrate.to.gradle.popup": "false"
   }
@@ -221,7 +222,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747573085438</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: add workspace config">
+      <option name="closed" value="true" />
+      <created>1747573868977</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747573868977</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: add workspace config">
+      <option name="closed" value="true" />
+      <created>1747574037817</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747574037817</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
