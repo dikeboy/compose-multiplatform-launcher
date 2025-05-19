@@ -7,7 +7,15 @@ import javax.imageio.ImageIO
 
 
 object AppIconFetcher {
-
+    class MacAppInfo internal constructor(var name: String, var icon: BufferedImage?,var installPath:String?) {
+        override fun equals(other: Any?): Boolean {
+            if (other is MacAppInfo) {
+                if (other.name == name && other.installPath == installPath)
+                    return true;
+            }
+            return false;
+        }
+    }
     fun getInstalledApplications(fileList: MutableList<String>, path: String, start: Int, deep: Int) {
         // 查找/Applications目录下的所有.app文件
         val file = File(path)
@@ -75,8 +83,8 @@ object AppIconFetcher {
 
     // 获取所有应用的图标
     @Throws(IOException::class)
-    fun getAllAppIcons(): Map<String, BufferedImage> {
-        val icons: MutableMap<String, BufferedImage> = HashMap()
+    fun getAllAppIcons(): List<MacAppInfo> {
+        val list= mutableListOf<MacAppInfo>()
         val fileList = ArrayList<String>()
         getInstalledApplications(fileList,"/Applications",0,1);
         getInstalledApplications(fileList,"/System/Applications",0,1);
@@ -87,13 +95,13 @@ object AppIconFetcher {
             if (iconPath != null) {
                 try {
                     val icon = convertIcnsToPng(iconPath)
-                    icons[name] = icon
+                    list.add(MacAppInfo(name,icon,app))
                 } catch (e: Exception) {
                     System.err.println("无法转换图标: " + app + " - " + e.message)
                 }
             }
         }
 
-        return icons
+        return list
     }
 }
