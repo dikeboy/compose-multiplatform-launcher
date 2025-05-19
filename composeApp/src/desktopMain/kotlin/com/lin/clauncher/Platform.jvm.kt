@@ -25,16 +25,15 @@ class JVMPlatform: Platform {
             var alist = ArrayList<ApplicationInfo>()
 
             if(osName.contains("mac")){
-                var bufferImg =  AppIconFetcher.getAllAppIcons()
-
-                bufferImg.forEach { k,v ->
-                    alist.add(
-                        ApplicationInfo(
-                            name = "${k}",
-                            icon = v.toComposeImageBitmap()
-                        )
-                    )
-                }
+               AppIconFetcher.getAllAppIcons()?.forEach {
+                   alist.add(
+                       ApplicationInfo(
+                           name = "${it.name}",
+                           icon = it.icon?.toComposeImageBitmap(),
+                           pageName = it.installPath
+                       )
+                   )
+               }
             }else if(osName.contains("win")){
 
                  var list = InstalledAppInfo().getInstalledApps()
