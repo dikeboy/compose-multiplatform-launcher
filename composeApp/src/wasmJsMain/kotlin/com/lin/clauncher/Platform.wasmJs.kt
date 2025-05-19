@@ -4,101 +4,72 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import clauncher.composeapp.generated.resources.Res
 import clauncher.composeapp.generated.resources.mytest
-import clauncher.composeapp.generated.resources.wall_paper
-import coil3.util.DebugLogger
-import coil3.util.Logger
 import com.lin.clauncher.util.ClientType
 import com.lin.comlauncher.entity.AppInfoBaseBean
 import com.lin.comlauncher.entity.ApplicationInfo
-import kotlinx.browser.document
-import kotlinx.coroutines.suspendCancellableCoroutine
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.ResourceEnvironment
-import org.jetbrains.compose.resources.getDrawableResourceBytes
-import org.jetbrains.compose.resources.getSystemResourceEnvironment
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.InternalResourceApi
+import org.jetbrains.compose.resources.getDrawableResourceBytes
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
+import org.jetbrains.skia.Paint
+import org.jetbrains.skia.Rect
+import org.jetbrains.skia.SamplingMode
+import org.jetbrains.skia.Surface
 import org.khronos.webgl.ArrayBuffer
-import org.khronos.webgl.Uint8Array
-import org.khronos.webgl.Uint8ClampedArray
-import org.khronos.webgl.set
-import org.w3c.dom.HTMLImageElement
-import org.w3c.files.Blob
-import org.w3c.dom.Image
-import org.w3c.dom.ImageData
-import org.w3c.dom.url.URL
 import org.w3c.fetch.Response
+import org.w3c.files.Blob
 import org.w3c.files.BlobPropertyBag
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class WasmPlatform: Platform {
     override val name: String = "Web with Kotlin/Wasm"
+    @OptIn(ExperimentalResourceApi::class)
     override suspend fun getAppList(): AppInfoBaseBean {
+        var map = mutableMapOf("facebook" to "logo-facebook.png",
+            "gmail" to "logo-gmail.png", "google" to "logo-google.png",
+            "youtube" to "logo-youtube.png")
         return AppInfoBaseBean().apply {
             var alist = ArrayList<ApplicationInfo>()
-                alist.add(
-                    ApplicationInfo(
-                    name="test",
-                    icon = getImageResource("")
-                )
-            )
-            print(" add finish")
+              map.forEach {
+                  var drawable: DrawableResource =  readDrawableByte(it.value)
+                  var byte = getDrawableResourceBytes(getSystemResourceEnvironment(),drawable)
+                  alist.add(
+                      ApplicationInfo(
+                          name=it.key,
+                          icon = toImageBitmap(byte)
+                      ))
+              }
             homeList.add(alist)
         }
     }
 
-     @OptIn(ExperimentalResourceApi::class)
-     suspend fun getImageResource(res: String): ImageBitmap? {
-         var drawable: DrawableResource =  Res.drawable.mytest
-         var byte = getDrawableResourceBytes(getSystemResourceEnvironment(),drawable)
-         return byteArrayToImageBitmap(byte);
-    }
-
-    suspend fun byteArrayToImageBitmap(
-        byteArray: ByteArray,
-        mimeType: String = "image/png"
-    ): ImageBitmap? {
-        val blob = Blob(toUint8Array(byteArray), BlobPropertyBag(type = mimeType))
-        println("blog ${blob.size}  type=${blob}")
-        window.createImageBitmap(blob).then(onFulfilled = {
-          println("onFulFilled ${it}")
-          null},
-          onRejected = {
-              println("onRejected $it")
-              null
-          })
-        return null;
-//        var jsArr = getResourceBytes("images/logo-facebook.png")
-//         window.createImageBitmap(ImageData(Uint8ClampedArray(buffer = jsArr,0,jsArr.byteLength),0,0)).then(onFulfilled = {
-//            println("onFulFilled ${it}")
-//            null},
-//            onRejected = {
-//                println("onRejected $it")
-//                null
-//            })
-//        return null;
-
-    }
-
-    // 工具函数：读取资源文件为 ByteArray
-    suspend fun getResourceBytes(path: String): ArrayBuffer {
-        val response = window.fetch(path).await<Response>()
-        if (!response.ok) throw Exception("资源未找到: $path")
-        var arrayBuffer =  response.arrayBuffer().await<ArrayBuffer>()
-        return arrayBuffer
-    }
-
-    fun toUint8Array( byteArray: ByteArray): JsArray<JsAny?> {
-        val jsArray =  ArrayList<JsAny>()
-        byteArray.forEachIndexed { index, byte ->
-            // 将有符号 Byte 转换为无符号数值
-            jsArray.add((byte.toInt() and 0xFF).toJsNumber())
-//            jsArray.add((byte.toInt()).toJsNumber())
+    fun toImageBitmap(byteArray: ByteArray): ImageBitmap {
+        val image = org.jetbrains.skia.Image.makeFromEncoded(byteArray)
+        val targetImage: org.jetbrains.skia.Image
+        val scale = 1f
+        val targetH = image.height * scale
+        val targetW = image.width * scale
+        val srcRect = Rect.Companion.makeWH(image.width.toFloat(), image.height.toFloat())
+        val dstRect = Rect.Companion.makeWH(targetW, targetH)
+        targetImage = Surface.makeRasterN32Premul(targetW.toInt(), targetH.toInt()).run {
+            val paint = Paint().apply { isAntiAlias = true }
+            canvas.drawImageRect(image, srcRect, dstRect, SamplingMode.LINEAR, paint, true)
+            makeImageSnapshot()
         }
-        return  jsArray.toJsArray()
+        return targetImage.toComposeImageBitmap()
+    }
+
+    @OptIn(InternalResourceApi::class)
+    fun readDrawableByte(imageName:String ):DrawableResource{
+        return DrawableResource(
+            "drawable:$imageName",
+            setOf(
+                org.jetbrains.compose.resources.ResourceItem(setOf(),
+                    "images/$imageName", -1, -1),
+            )
+        )
     }
 }
 
